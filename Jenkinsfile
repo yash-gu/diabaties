@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -10,7 +11,8 @@ pipeline {
 
         stage('Build Docker image') {
             steps {
-                sh '/Applications/Docker.app/Contents/Resources/bin/docker build -t diabetes-api .'
+                sh 'mkdir -p /tmp/docker-config && echo "{\"auths\":{}}" > /tmp/docker-config/config.json'
+                sh 'HOME=/tmp/docker-config /Applications/Docker.app/Contents/Resources/bin/docker build -t diabetes-api .'
             }
         }
 
