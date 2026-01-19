@@ -1,0 +1,24 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: docker build -t diabetes-api .
+    
+    - name: Run container and test API
+      run: |
+        docker run -d --rm -p 8000:8000 --name diabetes-api-test diabetes-api
+        sleep 5
+        curl -X POST "http://localhost:8000/predict" \
+          -H "Content-Type: application/json" \
+          -d '{"Pregnancies":6,"Glucose":148,"BloodPressure":72,"SkinThickness":35,"Insulin":0,"BMI":33.6,"DiabetesPedigreeFunction":0.627,"Age":50}'
+        docker stop diabetes-api-test || true
