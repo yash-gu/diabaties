@@ -1,4 +1,3 @@
-cat > README.md << 'EOF'
 # 🏥 Diabetes Risk Prediction - MLOps Project
 
 A complete end-to-end Machine Learning Operations (MLOps) project that demonstrates ML model development, API deployment, CI/CD automation, Docker containerization, and UI/UX design.
